@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'home_page.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,6 +16,12 @@ void main() {
 final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void _initNotiSetting() async {
+  tz.initializeTimeZones();
+
+// 'Asia/Seoul'
+  final String? timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+
+  tz.setLocalLocation(tz.getLocation(timeZoneName!));
   const initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
 
@@ -27,8 +39,6 @@ void _initNotiSetting() async {
   final result = await flutterLocalNotificationsPlugin.initialize(
     initializationSettings,
   );
-
-  print(result);
 }
 
 class MyApp extends StatelessWidget {
@@ -43,22 +53,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('notification')),
-      body: Center(
-          child: ElevatedButton(
-        onPressed: () => () {},
-        child: const Text('btn'),
-      )),
     );
   }
 }
