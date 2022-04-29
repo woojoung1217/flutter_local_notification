@@ -1,5 +1,9 @@
 # flutter_noti_test
 
+# 플러터 내에서 시뮬레이터를 돌려서 noti API를 사용해서 원하는 시간에 알림을 받도록 설정했다.
+
+ 
+
 A new Flutter project..
 
 ## Getting Started
